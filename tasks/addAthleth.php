@@ -43,22 +43,24 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/main.css">
     <title>Document</title>
 </head>
 
 <body>
-    <form method="POST">
-        <h2>Добавить спортсмена </h2>
-        <label> Введите имя
-            <input type="text" name="name" value="">
-        </label>
-        <label> Введите фамилию
-            <input type="text" name="sure_name" value="">
-        </label>
-        <label> Введите отчество
-            <input type="text" name="patronymic" value="">
-        </label>
-        <input type="submit" value="Отправить">
+<?php include './tamplate/header.php'?>
+    <form class="athleth_form" method="POST">
+        <h2 class="athleth_title">Добавить спортсмена </h2>
+        <label class="athleth_label" form="name"> Введите имя: </label>
+            <input class="athleth_input" type="text" name="name" id ="name" value="">
+       
+        <label class="athleth_label" from="sure_name"> Введите фамилию:</label>
+            <input class="athleth_input" type="text" name="sure_name" id="sure_name" value="">
+        
+        <label class="athleth_label" from="patronymic"> Введите отчество:</label>
+            <input  class="athleth_input" type="text" name="patronymic" id="patronymic" value="">
+        
+        <input class="athleth_input athleth_input_submit " type="submit" value="Отправить">
     </form>
 
     <?php foreach ($athletes as $value) : ?>
