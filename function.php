@@ -9,7 +9,6 @@ function conn(){
     }else return $conn;
 }
 
-/*Запрос на медали */
 function select_medal_type ($conn){
     $medal_type=[];
     $sql = "SELECT * FROM medal_type";
@@ -22,7 +21,7 @@ function select_medal_type ($conn){
     }
     return $medal_type;
 }
-/*Запрос на вид спорта */
+
 function select_sport_type ($conn){
     $sport_type=[];
     $sql = "SELECT * FROM sport_type";
@@ -35,7 +34,7 @@ function select_sport_type ($conn){
     }
     return $sport_type;
 }
-/*Запрос страны */
+
 function select_country($conn){
     $country=[];
     $sql = "SELECT * FROM country";
@@ -49,7 +48,7 @@ function select_country($conn){
     return $country;
 }
 
-/*Запрос спортсмена */
+
 function select_athletes($conn){
     $athletes=[];
     $sql = "SELECT * FROM athletes";
@@ -63,3 +62,24 @@ function select_athletes($conn){
     return $athletes;
 }
 
+function country_medals($conn)
+{
+    $country_medals = [];
+    $sql = "SELECT country_medals.id, `country`,`medal_type`,`name`,`sure_name`,`patronymic`,`sport_type` FROM country_medals
+JOIN medal_type ON country_medals.medal_type_id = medal_type.id
+JOIN country ON country_medals.country_id = country.id
+JOIN athletes ON country_medals.athletes_id = athletes.id
+JOIN sport_type ON country_medals.sport_type_id = sport_type.id
+";
+    $result = mysqli_query($conn, $sql);
+  
+    if ($result) {
+        if (mysqli_num_rows($result) != 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $country_medals[] = $row;
+            }
+        }
+    }
+   
+    return $country_medals;
+}
