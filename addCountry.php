@@ -1,60 +1,49 @@
 <?php
+
 require_once './function.php';
 $error = [];
 $conn = conn();
 
 
-if (isset($_GET['id'])) {
-    $id = (int) $_GET['id'];
-    $sql = "DELETE FROM `country` WHERE id ='$id'";
+if (isset($_GET['del_id'])) {
+    $sql = "DELETE FROM `country` WHERE id =".(int) $_GET['del_id'];;
     $result = mysqli_query($conn, $sql);
     header("Location: ./addCountry.php");
 }
 
-if (isset($_POST['country']) && $_POST['country'] !='') {
+if (isset($_POST['country']) && $_POST['country'] != '') {
     $country = mysqli_real_escape_string($conn, $_POST['country']);
     $sql = "INSERT INTO country (country)
                 VALUES('$country')";
     $result = mysqli_query($conn, $sql);
     if ($result) {
-        header("Location: ./index.php");
+        // header("Location: ./index.php");
     }
 }
 
 $all_country = select_country($conn);
-
-
 mysqli_close($conn);
-
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/main.css">
-    <title>Страна</title>
-</head>
 
 <body>
     <?php include './tamplate/header.php' ?>
-    <form method="POST">
-        <h2>Добавить Страну </h2>
-        <label> Введите название страны
-            <input type="text" name="country" value="">
-        </label>
-        <input type="submit" value="Отправить">
+    <h2 class="title">Добавить Страну </h2>
+    <form class="form" method="POST">
+        
+        <label for="country"> Введите название страны</label>
+        <input required class="input" type="text" name="country" id="country" value="">
+
+        <input class="input input_submit" type="submit" value="Отправить">
     </form>
 
-    <?php foreach ($all_country as $value) : ?>
-        <ul>
-            <li><?= $value['country'] ?> <a href="./addCountry.php?id=<?= $value['id'] ?>">Удалить</a></li>
+    <?php if (isset($all_country)):?>
+        <?php foreach ($all_country as $value) : ?>
+            <ul>
+                <li><?= $value['country'] ?> <a href="./addCountry.php?del_id=<?= $value['id'] ?>">Удалить</a></li>
 
-        </ul>
-    <?php endforeach; ?>
+            </ul>
+        <?php endforeach; ?>
+    <?php endif;?>
 </body>
 
 </html>

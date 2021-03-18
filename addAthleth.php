@@ -4,9 +4,8 @@ $error = [];
 $conn = conn();
 
 
-if (isset($_GET['id'])) {
-    $id = (int) $_GET['id'];
-    $sql = "DELETE FROM `athletes` WHERE id ='$id'";
+if (isset($_GET['del_id'])) {
+    $sql = "DELETE FROM `athletes` WHERE id =".(int) $_GET['del_id'];
     $result = mysqli_query($conn, $sql);
     header("Location: ./addAthleth.php");
 }
@@ -27,37 +26,27 @@ $athletes = select_athletes($conn);
 
 mysqli_close($conn);
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/main.css">
-    <title>Document</title>
-</head>
-
 <body>
     <?php include './tamplate/header.php' ?>
-    <form class="athleth_form" method="POST">
+    <form class="form" method="POST">
         <h2 class="athleth_title">Добавить спортсмена </h2>
-        <label class="athleth_label" form="name"> Введите имя: </label>
-        <input class="athleth_input" type="text" name="name" id="name" value="">
+        <label class="label" form="name"> Введите имя: </label>
+        <input required class="input" type="text" name="name" id="name" value="">
 
-        <label class="athleth_label" from="sure_name"> Введите фамилию:</label>
-        <input class="athleth_input" type="text" name="sure_name" id="sure_name" value="">
+        <label class="label" from="sure_name"> Введите фамилию:</label>
+        <input required class="input" type="text" name="sure_name" id="sure_name" value="">
 
-        <label class="athleth_label" from="patronymic"> Введите отчество:</label>
-        <input class="athleth_input" type="text" name="patronymic" id="patronymic" value="">
+        <label class="label" from="patronymic"> Введите отчество:</label>
+        <input class="input" type="text" name="patronymic" id="patronymic" value="">
 
-        <input class="athleth_input athleth_input_submit " type="submit" value="Отправить">
+        <input class="input input_submit " type="submit" value="Отправить">
     </form>
     <ul class="athleth_list">
+        <?php if (isset($athletes)):?>
         <?php foreach ($athletes as $value) : ?>
-            <li class="athleth_item"> <?= $value['name']; ?> <?= $value['sure_name']; ?> <?= $value['patronymic']; ?> <a href="./addAthleth.php?id=<?= $value['id'] ?>">Удалить</a></li>
+            <li class="athleth_item"> <?= $value['name']; ?> <?= $value['sure_name']; ?> <?= $value['patronymic']; ?> <a href="./addAthleth.php?del_id=<?= $value['id'] ?>">Удалить</a></li>
         <?php endforeach; ?>
+        <?php endif;?>
     </ul>
 
 
