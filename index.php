@@ -15,9 +15,7 @@ if (isset($_GET['column'])) {
 
     $column = $_GET['column'];
 }
-if (isset($_GET['column'])){
-    
-}
+
 
 $sql = "SELECT ROW_NUMBER() OVER(ORDER BY gold desc, silver desc, cuprum desc ) as position , SUM(medal_type_id=1) AS gold, SUM(medal_type_id=2) as silver, SUM(medal_type_id=3) as cuprum, COUNT(medal_type_id) as all_medals, country FROM country_medals
 JOIN country ON country_medals.country_id = country.id 
@@ -52,8 +50,8 @@ mysqli_close($conn);
         <h1 class="game_title">Олимпийские Игры</h1>
         <h1 class="game_title">Медальный зачёт</h1>
 
-        <table class="game_table">
-            <tr clalss="game_row">
+        <table class="table">
+            <tr clalss="row">
                 <th class="title_col"><a href="index.php?&column=position&type_sort=<?= ($type_sort == 'asc') ? 'desc' : 'asc' ?>">Места</a></th>
                 <th class="title_col"><a href="index.php?column=country&type_sort=<?= ($type_sort == 'asc') ? 'desc' : 'asc' ?>">Страна</a></th>
                 <th class="title_col"><a href="index.php?column=gold&type_sort=<?= ($type_sort == 'asc') ? 'desc' : 'asc' ?>">Золотые медали</a></th>
@@ -64,7 +62,7 @@ mysqli_close($conn);
 
             <?php if(isset($medals)):?>
             <?php foreach ($medals as $value) : ?>
-                <tr class="game_row">
+                <tr class="row">
                     <td class="title_col"><?= $value['position'] ?></td>
                     <td class="title_col"><?= $value['country'] ?></td>
                     <td class="title_col"><a href="./pageAwards.php?medal=1&country=<?= $value['country'] ?>"><?= $value['gold'] ?></a></td>

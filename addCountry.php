@@ -7,6 +7,7 @@ $conn = conn();
 
 if (isset($_GET['del_id'])) {
     $sql = "DELETE FROM `country` WHERE id =".(int) $_GET['del_id'];;
+    $sql = "DELETE FROM `country_medals` WHERE country_id =".(int) $_GET['del_id'];;
     $result = mysqli_query($conn, $sql);
     header("Location: ./addCountry.php");
 }

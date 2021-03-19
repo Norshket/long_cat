@@ -1,7 +1,7 @@
 <?php
 
 function conn(){
-    $conn = mysqli_connect('localhost', 'root','', 'awards' );
+    $conn = mysqli_connect('localhost', 'root','root', 'awards' );
     if(!$conn){
        die(mysqli_connect_error());
     }else return $conn;
