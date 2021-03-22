@@ -4,6 +4,7 @@ require_once './function.php';
 $medals = [];
 $conn = conn();
 
+
 $type_sort = 'desc';
 $column = 'gold';
 
@@ -16,20 +17,31 @@ if (isset($_GET['column'])) {
     $column = $_GET['column'];
 }
 
+$medals =  ORM::for_table('country_medals')
+            ->select_expr('ROW_NUMBER() OVER(ORDER BY gold desc, silver desc, cuprum desc ) ','position')
+            ->select_expr(' SUM(medal_type_id=1)','gold')
+            ->select_expr(' SUM(medal_type_id=2)','silver')
+            ->select_expr(' SUM(medal_type_id=3)','cuprum')
+            ->select_expr(' COUNT(medal_type_id)','all_medals')
+            ->select('country')
+            ->join('country' ,'country_medals.country_id = country.id')
+            ->group_by('country_id')
+            ->order_by_expr(  $column . " " . $type_sort)
+            //разобраться с этой хернёй
+            ->find_array();  
+            ;
 
-$sql = "SELECT ROW_NUMBER() OVER(ORDER BY gold desc, silver desc, cuprum desc ) as position , SUM(medal_type_id=1) AS gold, SUM(medal_type_id=2) as silver, SUM(medal_type_id=3) as cuprum, COUNT(medal_type_id) as all_medals, country FROM country_medals
-JOIN country ON country_medals.country_id = country.id 
-GROUP BY country_id
-ORDER BY " . $column . " " . $type_sort  ;
-$result = mysqli_query($conn, $sql);
-if ($result) {
-    if (mysqli_num_rows($result) > 0) {
-        $medals = mysqli_fetch_all($result, MYSQLI_ASSOC);    
-    }
-}
+// $sql = "SELECT ROW_NUMBER() OVER(ORDER BY gold desc, silver desc, cuprum desc ) as position , SUM(medal_type_id=1) AS gold, SUM(medal_type_id=2) as silver, SUM(medal_type_id=3) as cuprum, COUNT(medal_type_id) as all_medals, country FROM country_medals
+// JOIN country ON country_medals.country_id = country.id 
+// GROUP BY country_id
+// ORDER BY " . $column . " " . $type_sort  ;
+// $result = mysqli_query($conn, $sql);
+// if ($result) {
+//     if (mysqli_num_rows($result) > 0) {
+//         $medals = mysqli_fetch_all($result, MYSQLI_ASSOC);    
+//     }
+// }
 
-
-mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>

@@ -3,48 +3,37 @@ require_once './function.php';
 $error = [];
 $conn = conn();
 
-
-
-
-
 if (isset($_GET['del_id'])) {
-    $sql = "DELETE FROM `athletes` WHERE id =".(int) $_GET['del_id'];
 
+    $del_id = (int) $_GET['del_id'];
 
-    $result = mysqli_query($conn, $sql);
+    $delSportType = ORM::for_table('athletes')->find_one($del_id);
+    $delSportType->delete();
+
     header("Location: ./addAthleth.php");
+
 }
 
+//но как теперь защититья от sql инъекций?
 
 if ($_POST['name']!='' && $_POST['sure_name']!='') {
-    $name = mysqli_real_escape_string($conn, (string) $_POST['name']);
-    $sure_name = mysqli_real_escape_string($conn, (string) $_POST['sure_name']);
-    $patronymic = mysqli_real_escape_string($conn,(string) $_POST['patronymic']);
+    $name = htmlentities($_POST['name']);
+    $sure_name =  htmlentities($_POST['sure_name']);
+    $patronymic = htmlentities ($_POST['patronymic']);
 
-    // подготовленный запрос на показать на проверку
-    $sql = "INSERT INTO athletes (name,sure_name,patronymic)
-                VALUES(?,?,?)";        
-    $stmt = mysqli_prepare ($conn, $sql);
 
-    mysqli_stmt_bind_param($stmt, "sss",'$name','$sure_name','$patronymic');
-
-    mysqli_stmt_execute ($stmt);
-
-    mysqli_stmt_close($stmt);
+    $addAthletes = ORM::for_table('athletes')->create();
+    $addAthletes->name = $name;
+    $addAthletes->sure_name = $sure_name;
+    $addAthletes->patronymic = $patronymic;
+    $addAthletes->save();
 
    
-
-    
-
-
-
-    // $result = mysqli_query($conn, $sql);
 }
 
 
 $athletes = select_athletes($conn);
 
-mysqli_close($conn);
 ?>
 <body>
     <?php include './tamplate/header.php' ?>

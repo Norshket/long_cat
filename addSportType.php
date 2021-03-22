@@ -4,22 +4,26 @@ $error = [];
 $conn = conn();
 
 if (isset($_GET['del_id'])) {
-    $sql = "DELETE FROM `sport_type` WHERE id =" . (int)$_GET['del_id'];
-    $result = mysqli_query($conn, $sql);
-    header("Location: ./addSportType.php");
+
+    $del_id = $_GET['del_id'];
+
+    $delSportType = ORM::for_table('sport_type')->find_one($del_id);
+    $delSportType->delete();
+
+     header("Location: ./addSportType.php");
 }
 
 
 if (isset($_POST['sport_type']) && $_POST['sport_type'] != '') {
-    $sport_type = mysqli_real_escape_string($conn, $_POST['sport_type']);
-    $sql = "INSERT INTO sport_type (sport_type) VALUES('$sport_type')";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-        header("Location: ./index.php");
-    }
+
+    $sport_type = htmlentities($_POST['sport_type']);
+    
+    $addSportType = ORM::for_table('sport_type')->create();
+    $addSportType->sport_type = $sport_type;
+    $addSportType->save();
 }
 $all_sport_type = select_sport_type($conn);
-mysqli_close($conn);
+
 ?>
 
 <body>
