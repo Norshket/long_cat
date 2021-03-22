@@ -4,21 +4,41 @@ $error = [];
 $conn = conn();
 
 
+
+
+
 if (isset($_GET['del_id'])) {
     $sql = "DELETE FROM `athletes` WHERE id =".(int) $_GET['del_id'];
+
+
     $result = mysqli_query($conn, $sql);
     header("Location: ./addAthleth.php");
 }
 
 
 if ($_POST['name']!='' && $_POST['sure_name']!='') {
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $sure_name = mysqli_real_escape_string($conn, $_POST['sure_name']);
-    $patronymic = mysqli_real_escape_string($conn, $_POST['patronymic']);
+    $name = mysqli_real_escape_string($conn, (string) $_POST['name']);
+    $sure_name = mysqli_real_escape_string($conn, (string) $_POST['sure_name']);
+    $patronymic = mysqli_real_escape_string($conn,(string) $_POST['patronymic']);
 
+    // подготовленный запрос на показать на проверку
     $sql = "INSERT INTO athletes (name,sure_name,patronymic)
-                VALUES('$name','$sure_name','$patronymic')";
-    $result = mysqli_query($conn, $sql);
+                VALUES(?,?,?)";        
+    $stmt = mysqli_prepare ($conn, $sql);
+
+    mysqli_stmt_bind_param($stmt, "sss",'$name','$sure_name','$patronymic');
+
+    mysqli_stmt_execute ($stmt);
+
+    mysqli_stmt_close($stmt);
+
+   
+
+    
+
+
+
+    // $result = mysqli_query($conn, $sql);
 }
 
 

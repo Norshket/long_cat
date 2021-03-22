@@ -13,7 +13,7 @@ if (isset($_GET['del_id'])) {
 }
 
 if (isset($_POST['country']) && $_POST['country'] != '') {
-    $country = mysqli_real_escape_string($conn, $_POST['country']);
+    $country = mysqli_real_escape_string($conn, (string)$_POST['country']);
     $sql = "INSERT INTO country (country)
                 VALUES('$country')";
     $result = mysqli_query($conn, $sql);
