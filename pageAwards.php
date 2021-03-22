@@ -1,4 +1,5 @@
 <?php
+
 require_once "./function.php";
 
 if (!($_GET)) {
@@ -8,24 +9,39 @@ $conn = conn();
 
 
 if ($_GET['medal']) {
-
-    $medal_type = "AND medal_type_id =" . (int)$_GET['medal'];
+    $medal_type = "AND medal_type_id =" . (int)$_GET['medal'];    
 }
 
 
-$country = mysqli_real_escape_string($conn, $_GET['country']);
+$country =(string) $_GET['country'];
+// А как здесь организовать выборку я хз  
 
-$sql = "SELECT medal_type,country,sport_type, GROUP_CONCAT(DISTINCT athletes.name , athletes.sure_name, athletes.patronymic SEPARATOR ', '  ) as `name` 
-        FROM country_medals
-        JOIN medal_type ON country_medals.medal_type_id = medal_type.id 
-        JOIN country ON country_medals.country_id = country.id
-        JOIN athletes  ON country_medals.athletes_id = athletes.id
-        JOIN sport_type ON country_medals.sport_type_id = sport_type.id
-        WHERE  country = '$country'  $medal_type 
-        GROUP BY team
-        ";
 
-$result = mysqli_query($conn, $sql);
+$medalsNamesCountry = ORM:: for_table('country_medals')
+                    ->select('medal_type.medal_type')
+                    ->select('country.country')
+                    ->select('medal_type.medal_type')
+                    ->select_expr("GROUP_CONCAT(DISTINCT athletes.name , athletes.sure_name, athletes.patronymic SEPARATOR ', '",'name')
+                    ->join('medal_type','country_medals.medal_type_id = medal_type.id')
+                    ->join('country','country_medals.country_id = country.id')
+                    ->join('athletes','country_medals.athletes_id = athletes.id')
+                    ->join('sport_type','country_medals.sport_type_id = sport_type.id')
+                    ->where('country',$country)
+                    ->find_array(); 
+
+
+
+// $sql = "SELECT medal_type,country,sport_type, GROUP_CONCAT(DISTINCT athletes.name , athletes.sure_name, athletes.patronymic SEPARATOR ', '  ) as `name` 
+//         FROM country_medals
+//         JOIN medal_type ON country_medals.medal_type_id = medal_type.id 
+//         JOIN country ON country_medals.country_id = country.id
+//         JOIN athletes  ON country_medals.athletes_id = athletes.id
+//         JOIN sport_type ON country_medals.sport_type_id = sport_type.id
+//         WHERE  country = '$country'  $medal_type 
+//         GROUP BY team
+//         ";
+ var_dump($medalsNamesCountry);
+
 
 while ($row = mysqli_fetch_all($result, MYSQLI_ASSOC)) {
     $medals_and_people = $row;

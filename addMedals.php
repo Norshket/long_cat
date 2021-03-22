@@ -1,50 +1,59 @@
 <?php
+
 require_once './function.php';
 $error = [];
 $conn = conn();
-$medals = select_medal_type($conn);
-$sport_type = select_sport_type($conn);
-$country = select_country($conn);
-$athletes = select_athletes($conn);
+$medals = select_medal_type();
+$sport_type = select_sport_type();
+$country = select_country();
+$athletes = select_athletes();
 
 
 
 if (isset($_GET['del_id'])) {
-    $sql = "DELETE FROM country_medals WHERE id=" . (int)$_GET['del_id'];
-    $result = mysqli_query($conn, $sql);
-    // header("Location: ./addMedals.php");
+
+    $del_id =(int) $_GET['del_id'];
+
+    $delSportType = ORM::for_table('country_medals')->find_one($del_id);
+    $delSportType->delete();
+
+    
+    header("Location: ./addMedals.php");
 }
 
 $athletes_name = $_POST['athletes'];
 
 if (isset($athletes_name)) {
-    $country_id = (int)$_POST['country'];
-    $medals_id =  (int)$_POST['medals'];
+    
+    $country_id =(int)$_POST['country'];
+    $medals_id = (int) $_POST['medals'];
     $sport_types_id = (int)$_POST['sport_type'];
-    $team = uniqid();
+    $team = uniqid() ;  
+    
+    $addMedals = ORM:: for_table('country_medals')->create();    
+    $addMedals->medal_type_id=$medals_id;
+    $addMedals->country_id=$country_id;
+    $addMedals->team=$team;
+    $addMedals->sport_type_id=$sport_types_id;
+    
 
-
-    foreach ($athletes_name as $id) {
-        if ($id != 0) {
-            $athletes_id = (int) $id;
-            $sql = "INSERT INTO country_medals (medal_type_id, country_id, athletes_id, sport_type_id, team )
-                    VALUES ( $medals_id, $country_id ,$athletes_id, $sport_types_id, '$team')";
-            $result = mysqli_query($conn, $sql);
-            if (!$result) {
-                die(mysqli_error($conn));
-            }
+    foreach($athletes_name as $id){
+        if ($id != 0){
+            $addMedals->athletes_id=$id;
+            $addMedals->save();
         }
     }
-}
-$country_medals = country_medals($conn);
 
-mysqli_close($conn);
+}
+
+$country_medals = country_medals(); 
 ?>
 
 <body>
 
     <?php include './tamplate/header.php' ?>
     <div class="wrapper">
+
         <form class="form" method="POST">
 
             <?php if (isset($medals)) : ?>
@@ -142,14 +151,6 @@ mysqli_close($conn);
         </table>
 
     </div>
-
-
-
-
-
-
-
-
 
 </body>
 
