@@ -1,65 +1,44 @@
 <?php
-require_once "./function.php";
+include_once "lib/Smarty.class.php";
+require_once "function.php";
 
 if (!($_GET)) {
     header('Location: /');
 }
 $conn = conn();
 
+$country =(string)$_GET['country'];
+
+
+$medalsNamesCountry = ORM:: for_table('country_medals')
+                    ->select('medal_type.medal_type')
+                    ->select('country.country')
+                    ->select('sport_type.sport_type')
+                    ->select_expr("GROUP_CONCAT(DISTINCT athletes.name , athletes.sure_name , athletes.patronymic SEPARATOR ', ')" , 'name')
+                    ->join('medal_type','country_medals.medal_type_id = medal_type.id')
+                    ->join('country' ,'country_medals.country_id = country.id')
+                    ->join('athletes','country_medals.athletes_id = athletes.id')
+                    ->join('sport_type','country_medals.sport_type_id = sport_type.id')
+                    ->where('country.country',$country);
 
 if ($_GET['medal']) {
-
-    $medal_type = "AND medal_type_id =" . (int)$_GET['medal'];
+	$medal=(int)$_GET['medal']; 
+	
+	$medalsNamesCountry->where('country_medals.medal_type_id', $medal);   
+                           
 }
+                    
+$medalsNamesCountry = $medalsNamesCountry->group_by('team')
+                                        ->find_array();   
+                                        
 
 
-$country = mysqli_real_escape_string($conn, $_GET['country']);
+$smarty = smarty_conn();
 
-$sql = "SELECT medal_type,country,sport_type, GROUP_CONCAT(DISTINCT athletes.name , athletes.sure_name, athletes.patronymic SEPARATOR ', '  ) as `name` 
-        FROM country_medals
-        JOIN medal_type ON country_medals.medal_type_id = medal_type.id 
-        JOIN country ON country_medals.country_id = country.id
-        JOIN athletes  ON country_medals.athletes_id = athletes.id
-        JOIN sport_type ON country_medals.sport_type_id = sport_type.id
-        WHERE  country = '$country'  $medal_type 
-        GROUP BY team
-        ";
+$smarty->assign('country',$country);
+$smarty->assign('medalsNamesCountry', $medalsNamesCountry);
 
-$result = mysqli_query($conn, $sql);
+$smarty->display('page_awards.tpl');
 
-while ($row = mysqli_fetch_all($result, MYSQLI_ASSOC)) {
-    $medals_and_people = $row;
-}
 ?>
 
-
-
-<?php include './tamplate/header.php' ?>
-
-<body>
-    <?php if (isset($medals_and_people)) : ?>
-        <table class="table">
-            <tr>
-                <th class="title_col">Страна </th>
-                <th class="title_col">Вид спорта</th>
-                <th class="title_col">Медаль</th>
-                <th class="title_col">"ФИО" Спортсмена</th>
-            </tr>
-
-            <?php foreach ($medals_and_people as $value) : ?>
-                <tr>
-                    <td class="title_col"><?= $value['country'] ?></td>
-                    <td class="title_col"><?= $value['sport_type'] ?></td>
-                    <td class="title_col"><?= $value['medal_type'] ?></td>
-                    <td class="title_col"><?= $value['name'] ?> </td>
-                </tr>
-            <?php endforeach; ?>
-
-        </table>
-    <?php else : ?>
-        <p class="label">Здесь нет медалей </p>
-    <?php endif; ?>
-
-</body>
-
-</html>
