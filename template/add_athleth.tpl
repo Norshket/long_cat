@@ -25,7 +25,7 @@
                     {foreach $athletes as $value}
                         <tr>
                             <td> {$value.name} {$value.sure_name} {$value.patronymic}</td>
-                            <td><a class="btn bg-danger" href="addAthleth.php?del_id={$value.id}">Удалить</a></td>
+                            <td><a class="btn bg-danger" href="/Athleth/delete?del_id={$value.id}">Удалить</a></td>
                         </tr>
                 {/foreach}
                 </table>

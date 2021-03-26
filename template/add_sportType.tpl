@@ -18,7 +18,7 @@
                 <tr>
                     <td>{$value.sport_type}</td>
                     <td>
-                        <a  class="btn bg-danger" href="addSportType.php?del_id={$value.id}">Удалить</a>
+                        <a  class="btn bg-danger" href="SportType/delete?del_id={$value.id}">Удалить</a>
                     </td>
                 </tr>
             {/foreach}

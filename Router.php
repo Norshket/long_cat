@@ -1,19 +1,18 @@
 <?php
+   
+
+    $arr =parse_url($_SERVER['REQUEST_URI'] );
     
-    function Bob(){
-        $arr = explode("/", $_SERVER["SCRIPT_NAME"]); 
+       $path= explode("/", $arr['path']);
       
-        $class= $arr[1];
-        $method = $arr[2];
-        echo $class, $method;
 
-    }  
-    Bob(); 
+
+    $obj = new $path[1]();
+    //$obj->output();
+    $obj->{$path[2]}();
+
+
+
     
+
     
-
-  
-
-
-
-?>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.39, created on 2021-03-26 11:54:26
+/* Smarty version 3.1.39, created on 2021-03-26 17:32:21
   from 'C:\OSPanel\domains\tasks\template\add_sportType.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.39',
-  'unifunc' => 'content_605da142cba146_01338937',
+  'unifunc' => 'content_605df075427268_90971221',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '0c8d6ca3f53fedb8d2962224e688e4694a5e8ffc' => 
     array (
       0 => 'C:\\OSPanel\\domains\\tasks\\template\\add_sportType.tpl',
-      1 => 1616584021,
+      1 => 1616768733,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_605da142cba146_01338937 (Smarty_Internal_Template $_smarty_tpl) {
+function content_605df075427268_90971221 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
     <?php $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
@@ -50,7 +50,7 @@ $_smarty_tpl->tpl_vars['value']->do_else = false;
                     <td><?php echo $_smarty_tpl->tpl_vars['value']->value['sport_type'];?>
 </td>
                     <td>
-                        <a  class="btn bg-danger" href="addSportType.php?del_id=<?php echo $_smarty_tpl->tpl_vars['value']->value['id'];?>
+                        <a  class="btn bg-danger" href="SportType/delete?del_id=<?php echo $_smarty_tpl->tpl_vars['value']->value['id'];?>
 ">Удалить</a>
                     </td>
                 </tr>

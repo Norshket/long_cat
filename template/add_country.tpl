@@ -19,7 +19,7 @@
                 {foreach $all_country as $value}
                 <tr>
                     <td>{$value.country}</td>
-                    <td> <a  class="btn bg-danger" href="addCountry.php?del_id={$value.id}"> Удалить</a></td>
+                    <td> <a  class="btn bg-danger" href="/Country/delete?del_id={$value.id}"> Удалить</a></td>
                 </tr>
                 {/foreach}
             </table>

@@ -14,11 +14,11 @@
 <header>
 <nav class="nav nav-tabs justify-content-center">
         <ul class="nav flex-coumn mt-3 ">
-            <li class="nav-item"><a class="nav-link" href="/">На главную</a></li>
-            <li class="nav-item"><a class="nav-link" href="/addAthleth.php">Добавить спортсмена</a></li>
-            <li class="nav-item"><a class="nav-link" href="/addCountry.php">Добавить страну</a></li>
-            <li class="nav-item"><a class="nav-link" href="/addMedals.php">Добавить медаль</a></li>
-            <li class="nav-item"><a class="nav-link" href="/addSportType.php">Добавить вид спорта</a></li>
+            <li class="nav-item"><a class="nav-link" href="Index">На главную</a></li>
+            <li class="nav-item"><a class="nav-link" href="Athleth">Добавить спортсмена</a></li>
+            <li class="nav-item"><a class="nav-link" href="Country">Добавить страну</a></li>
+            <li class="nav-item"><a class="nav-link" href="Medals">Добавить медаль</a></li>
+            <li class="nav-item"><a class="nav-link" href="SportType">Добавить вид спорта</a></li>
         </ul>
     </nav>
 </header>
