@@ -93,7 +93,7 @@
                             <td>{$value.medal_type} </td>
                             <td>{$value.sport_type} </td>
                             <td>{$value.name} {$value.sure_name} {$value.patronymic}</td>
-                            <td><a  class="btn bg-danger" href="addMedals.php?del_id={$value.id}">Удалить</a> </td>
+                            <td><a  class="btn bg-danger" href="Medals/delete?del_id={$value.id}">Удалить</a> </td>
 
                         </tr>
                     {/foreach}

@@ -1,100 +1,29 @@
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+header{
+padding-bottom: 30px;
+}
+.nav-tabs {
+    background-image: linear-gradient( rgb(255, 255, 255) ,rgb(255, 168, 6));
 }
 
-body,
-html {
-    color: rgb(90, 90, 90);
-    padding: 0 10px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-ul {
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.nav_list {
-    display: flex;
-    justify-content: center;
-    margin: 30px 0;
-}
-
-.nav_item {
-    padding: 0 30px;
-    list-style: none;
-    text-align: center;
-}
-
-.nav_link {
-    text-decoration: none;
+.nav-link{
     font-size: 20px;
-
-    border-bottom: 2px solid transparent;
-}
-
-.nav_link:hover {
-    border-color: rgb(250, 162, 0);
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.game_title {
-    text-align: center;
-    width: 40%;
-    font-size: 30px;
     font-weight: 700;
+    color: rgb(255, 255, 255);
+}
+.h1{
+    text-align: center;  
+}
+a{
+    color: #646464;
+}
+a.hower{
+    color: #646464; 
+    text-decoration: 1px solid inherit;    
+}
+.bg-danger{
+    color: #fff ;
 }
 
-.table {
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 20%;
-    border-collapse: collapse;
-}
 
-.title_col {
-    padding: 10px 30px;
-    border: 2px solid #000;
-}
 
-.title {
-    font-size: 30px;
-    text-align: center;
-}
-.label {
-    margin: 10px;
-}
-
-.input {
-    padding: 5px;
-    height: 50px;
-    width: 100%;
-}
-
-.input_submit {
-    margin: 20px 0;
-}
-.form{
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-}
-.wrapper{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
 
