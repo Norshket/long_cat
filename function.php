@@ -1,85 +1,52 @@
 <?php
+require_once 'idiorm/idiorm.php';
+require_once 'configs/config.php';
 
-function conn(){
-    $conn = mysqli_connect('localhost', 'root','root', 'awards' );
-    if(!$conn){
-       die(mysqli_connect_error());
-    }else return $conn;
-}
 
-function select_medal_type($conn)
+function select_medal_type()
 {
-    $medal_type = [];
-    $sql = "SELECT * FROM medal_type ORDER BY id";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-        if (mysqli_num_rows($result) > 0) {            
-                $medal_type=mysqli_fetch_all($result, MYSQLI_ASSOC);
-        }
-    }
+    conn();
+    $medal_type = ORM::for_table('medal_type')->order_by_asc('id')->find_array();
     return $medal_type;
 }
 
 
-function select_sport_type($conn)
+function select_country()
 {
-    $sport_type = [];
-    $sql = "SELECT * FROM sport_type ORDER BY id";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-        if (mysqli_num_rows($result) > 0) {
-            $sport_type = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        }
-        return $sport_type;
-    }
+    conn();
+    $select_country = ORM::for_table('country')->order_by_asc('country')->find_array();
+    return $select_country;
 }
 
-function select_country($conn){
-    $country=[];
-    $sql = "SELECT * FROM country ORDER BY country";
-    $result= mysqli_query($conn,$sql);
-    if($result){
-        if(mysqli_num_rows($result)>0){
 
-        $country = mysqli_fetch_all($result ,MYSQLI_ASSOC);
-
-        }
-    }
-    return $country;
-}
-
-function select_athletes($conn){
-    $athletes=[];
-    $sql = "SELECT * FROM athletes ORDER BY `name`";
-    $result= mysqli_query($conn,$sql);
-    if($result){
-        if(mysqli_num_rows($result)>0){
-
-            $athletes= mysqli_fetch_all($result ,MYSQLI_ASSOC);            
-        }
-    }
+function select_athletes()
+{
+    conn();
+    $athletes = ORM::for_table('athletes')->order_by_asc('name')->find_array();
     return $athletes;
 }
 
 
-function country_medals($conn)
-{
-    $country_medals = [];
-    $sql = "SELECT country_medals.id, `country`,`medal_type`,`name`,`sure_name`,`patronymic`,`sport_type` FROM country_medals
-JOIN medal_type ON country_medals.medal_type_id = medal_type.id
-JOIN country ON country_medals.country_id = country.id
-JOIN athletes ON country_medals.athletes_id = athletes.id
-JOIN sport_type ON country_medals.sport_type_id = sport_type.id
-ORDER BY country
-";
-    $result = mysqli_query($conn, $sql);
-  
-    if ($result) {
-        if (mysqli_num_rows($result) != 0) {
-          
-            $country_medals= mysqli_fetch_all($result, MYSQLI_ASSOC) ;            
-        }
-    }
-   
+
+function country_medals()
+{ 
+    conn();
+$country_medals= ORM::for_table('country_medals')
+                ->select('country_medals.id')
+                ->select('country.country')
+                ->select('medal_type.medal_type')
+                ->select('sport_type.sport_type') 
+                ->select('athletes.name')
+                ->select('athletes.sure_name')
+                ->select('athletes.patronymic')
+                ->join('athletes','country_medals.athletes_id = athletes.id')
+                ->join('country','country_medals.country_id = country.id')
+                ->join('medal_type','country_medals.medal_type_id = medal_type.id')
+                ->join('sport_type','country_medals.sport_type_id = sport_type.id')
+                ->order_by_desc('country')
+                ->find_array();
+
+
     return $country_medals;
 }
+
