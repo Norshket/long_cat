@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.39, created on 2021-03-26 17:32:17
+/* Smarty version 3.1.39, created on 2021-03-29 13:34:39
   from 'C:\OSPanel\domains\tasks\template\add_medals.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.39',
-  'unifunc' => 'content_605df071917830_43563122',
+  'unifunc' => 'content_6061ad3f2a7a15_54091437',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e9afc7df79e9adc591cbe6bab0d8d9247de8f65c' => 
     array (
       0 => 'C:\\OSPanel\\domains\\tasks\\template\\add_medals.tpl',
-      1 => 1616768953,
+      1 => 1617004575,
       2 => 'file',
     ),
   ),
@@ -22,14 +22,14 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_605df071917830_43563122 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6061ad3f2a7a15_54091437 (Smarty_Internal_Template $_smarty_tpl) {
 ?>    <?php $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?> 
 
     <div class="container">
     <h2 class="h2">Присвоение медалей</h2>
         <div class="row justify-content-between ">
-            <form class="form col-lg-3" method="POST">
+            <form class="form col-lg-3" action="/medals/add" method="POST">
                 <?php if ((isset($_smarty_tpl->tpl_vars['medals']->value)) && $_smarty_tpl->tpl_vars['medals']->value) {?>
                     <label class="form-label" for="medals">Медали</label>
                     <select class="form-control" name="medals" id="medals">
@@ -90,7 +90,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 
                 <?php if ((isset($_smarty_tpl->tpl_vars['athletes']->value)) && 'athletes') {?>
 
-                    <label class="form-label" for="athletes">Первый спортсмен</label>
+                    <label class="form-label"  for="athletes">Первый спортсмен</label>
                     <select class="form-control" name="athletes[1]" id="athletes">
                         <option value="">Выберите имя сопортсмена </option>
                         <?php
@@ -212,7 +212,7 @@ $_smarty_tpl->tpl_vars['value']->do_else = false;
  <?php echo $_smarty_tpl->tpl_vars['value']->value['sure_name'];?>
  <?php echo $_smarty_tpl->tpl_vars['value']->value['patronymic'];?>
 </td>
-                            <td><a  class="btn bg-danger" href="Medals/delete?del_id=<?php echo $_smarty_tpl->tpl_vars['value']->value['id'];?>
+                            <td><a  class="btn bg-danger" href="/medals/delete?del_id=<?php echo $_smarty_tpl->tpl_vars['value']->value['id'];?>
 ">Удалить</a> </td>
 
                         </tr>

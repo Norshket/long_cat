@@ -7,9 +7,9 @@
 
         <div class="row justify-content-between">
 
-            <form class="form col-md-4" method="POST">
+            <form class="form col-md-4" action="/country/add" method="POST">
 
-                <label class="form-label" for="country"> Введите название страны</label>
+                <label class="form-label"  for="country"> Введите название страны</label>
                 <input required class="form-control" type="text" name="country" id="country" value="">
 
                 <input class="form-control btn-submit mt-3" type="submit" value="Отправить">
@@ -19,7 +19,7 @@
                 {foreach $all_country as $value}
                 <tr>
                     <td>{$value.country}</td>
-                    <td> <a  class="btn bg-danger" href="/Country/delete?del_id={$value.id}"> Удалить</a></td>
+                    <td> <a  class="btn bg-danger" href="/country/delete?del_id={$value.id}"> Удалить</a></td>
                 </tr>
                 {/foreach}
             </table>

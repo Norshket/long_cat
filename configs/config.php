@@ -1,4 +1,8 @@
 <?php
+require_once 'lib/Smarty.class.php';
+require_once 'idiorm/idiorm.php';
+require_once './classes/BaseService.php';
+
 function conn(){    
     ORM::configure('mysql:host=localhost;dbname=awards');
     ORM::configure('username', 'root');
@@ -9,18 +13,10 @@ try{
     echo "подключение отсутствует";
     die();
 }    
+return true;
 }
 
 
-
-function smarty_conn(){
-    $smarty=new Smarty();
-    $smarty-> template_dir='template';
-    $smarty-> compile_dir='template_c';
-    $smarty->config_dir='config';
-    $smarty->cache_dir='cache';
-
-    return $smarty;
-}
+conn();
 
 ?>

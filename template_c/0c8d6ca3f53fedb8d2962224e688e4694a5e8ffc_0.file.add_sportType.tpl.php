@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.39, created on 2021-03-26 17:32:21
+/* Smarty version 3.1.39, created on 2021-03-29 15:37:39
   from 'C:\OSPanel\domains\tasks\template\add_sportType.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.39',
-  'unifunc' => 'content_605df075427268_90971221',
+  'unifunc' => 'content_6061ca13d71d87_28016250',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '0c8d6ca3f53fedb8d2962224e688e4694a5e8ffc' => 
     array (
       0 => 'C:\\OSPanel\\domains\\tasks\\template\\add_sportType.tpl',
-      1 => 1616768733,
+      1 => 1617021458,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_605df075427268_90971221 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6061ca13d71d87_28016250 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
     <?php $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
@@ -30,7 +30,7 @@ function content_605df075427268_90971221 (Smarty_Internal_Template $_smarty_tpl)
     <div class="container">
     <h2 class="h2">Добавить Вид спорта </h2>
         <div class="row justify-content-between" >
-            <form class="form col-lg-4" method="POST">
+            <form class="form col-lg-4" action="/sporttype/add" method="POST">
 
                 <label for="sport_type" class="form-label"> Введите название</label>
                 <input required class="form-control" type="text" name="sport_type" id="sport_type" value="">
@@ -50,7 +50,7 @@ $_smarty_tpl->tpl_vars['value']->do_else = false;
                     <td><?php echo $_smarty_tpl->tpl_vars['value']->value['sport_type'];?>
 </td>
                     <td>
-                        <a  class="btn bg-danger" href="SportType/delete?del_id=<?php echo $_smarty_tpl->tpl_vars['value']->value['id'];?>
+                        <a  class="btn bg-danger" href="/sportType/delete?del_id=<?php echo $_smarty_tpl->tpl_vars['value']->value['id'];?>
 ">Удалить</a>
                     </td>
                 </tr>

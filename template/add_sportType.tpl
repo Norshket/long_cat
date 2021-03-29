@@ -4,7 +4,7 @@
     <div class="container">
     <h2 class="h2">Добавить Вид спорта </h2>
         <div class="row justify-content-between" >
-            <form class="form col-lg-4" method="POST">
+            <form class="form col-lg-4" action="/sporttype/add" method="POST">
 
                 <label for="sport_type" class="form-label"> Введите название</label>
                 <input required class="form-control" type="text" name="sport_type" id="sport_type" value="">
@@ -18,7 +18,7 @@
                 <tr>
                     <td>{$value.sport_type}</td>
                     <td>
-                        <a  class="btn bg-danger" href="SportType/delete?del_id={$value.id}">Удалить</a>
+                        <a  class="btn bg-danger" href="/sportType/delete?del_id={$value.id}">Удалить</a>
                     </td>
                 </tr>
             {/foreach}

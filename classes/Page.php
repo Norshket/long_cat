@@ -1,16 +1,8 @@
 <?php 
-require_once 'configs/config.php';
-require_once 'lib/Smarty.class.php';
-require_once 'idiorm/idiorm.php';
-
-class Page{
+class Page extends BaseService { 
     
-
-    function output($medal ,$country){
-
-        conn();
-
-        $country =(string)$country;
+    function view(){
+        $country =(int)$_GET['country_id'];
 
         $medalsNamesCountry = ORM:: for_table('country_medals')
                             ->select('medal_type.medal_type')
@@ -21,10 +13,10 @@ class Page{
                             ->join('country' ,'country_medals.country_id = country.id')
                             ->join('athletes','country_medals.athletes_id = athletes.id')
                             ->join('sport_type','country_medals.sport_type_id = sport_type.id')
-                            ->where('country.country',$country);
+                            ->where('country.id',$country);
 
-        if ($medal) {
-            $medal=(int)$medal; 
+        if ($_GET['medal']){
+            $medal=(int)$_GET['medal']; 
             
             $medalsNamesCountry->where('country_medals.medal_type_id', $medal);   
                                 
@@ -33,13 +25,11 @@ class Page{
         $medalsNamesCountry = $medalsNamesCountry->group_by('team')
                                                 ->find_array();                                           
 
-
-        $smarty = smarty_conn();
-
-        $smarty->assign('country',$country);
-        $smarty->assign('medalsNamesCountry', $medalsNamesCountry);
-
-        $smarty->display('page_awards.tpl');
+   
+        $this->smarty->assign('country',$country);
+        $this->smarty->assign('medalsNamesCountry', $medalsNamesCountry);
+        $this->smarty->display('page_awards.tpl');
+        return true;
     }
 }
 
