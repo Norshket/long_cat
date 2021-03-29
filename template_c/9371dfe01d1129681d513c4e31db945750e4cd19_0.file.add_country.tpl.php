@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.39, created on 2021-03-26 17:58:52
+/* Smarty version 3.1.39, created on 2021-03-29 13:34:38
   from 'C:\OSPanel\domains\tasks\template\add_country.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.39',
-  'unifunc' => 'content_605df6ac3c0594_86580584',
+  'unifunc' => 'content_6061ad3e62bba9_13843793',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9371dfe01d1129681d513c4e31db945750e4cd19' => 
     array (
       0 => 'C:\\OSPanel\\domains\\tasks\\template\\add_country.tpl',
-      1 => 1616770730,
+      1 => 1617004551,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_605df6ac3c0594_86580584 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6061ad3e62bba9_13843793 (Smarty_Internal_Template $_smarty_tpl) {
 ?><body>
   <?php $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?> 
@@ -33,9 +33,9 @@ function content_605df6ac3c0594_86580584 (Smarty_Internal_Template $_smarty_tpl)
 
         <div class="row justify-content-between">
 
-            <form class="form col-md-4" method="POST">
+            <form class="form col-md-4" action="/country/add" method="POST">
 
-                <label class="form-label" for="country"> Введите название страны</label>
+                <label class="form-label"  for="country"> Введите название страны</label>
                 <input required class="form-control" type="text" name="country" id="country" value="">
 
                 <input class="form-control btn-submit mt-3" type="submit" value="Отправить">
@@ -51,7 +51,7 @@ $_smarty_tpl->tpl_vars['value']->do_else = false;
                 <tr>
                     <td><?php echo $_smarty_tpl->tpl_vars['value']->value['country'];?>
 </td>
-                    <td> <a  class="btn bg-danger" href="/Country/delete?del_id=<?php echo $_smarty_tpl->tpl_vars['value']->value['id'];?>
+                    <td> <a  class="btn bg-danger" href="/country/delete?del_id=<?php echo $_smarty_tpl->tpl_vars['value']->value['id'];?>
 "> Удалить</a></td>
                 </tr>
                 <?php

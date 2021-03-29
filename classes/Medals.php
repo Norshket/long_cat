@@ -1,49 +1,50 @@
 <?php
 
-require_once 'configs/config.php';
-require_once 'lib/Smarty.class.php';
-require_once 'idiorm/idiorm.php';
+class Medals extends BaseService  {
 
-class Medals{
+    function delete(){
 
-    function delete($del){
-        conn(); 
-        $del_id = (int)$del;
-        $delSportType = ORM::for_table('country_medals')->find_one($del_id);
+        $delId = (int)$_GET['del_id']; 
+        $delSportType = ORM::for_table('country_medals')->find_one($delId);
         $delSportType->delete();
-        header("Location: Index");
+        header("Location: /medals/view");
+        die();
     }
 
-    function add($country, $medals ,$sport_type, $athletes ){
-        $country_id = (int)$country;
-        $medals_id = (int)$medals;
-        $sport_types_id = (int)$sport_type;
-        $athletes_name = $athletes ;
+    function add()
+    {
+        $countryId = (int)$_POST['country'];
+        $medalsId = (int)$_POST['medals'];
+        $sportTypesId = (int)$_POST['sport_type'];
+        $athletesName = (array)$_POST['athletes'];
         $team = uniqid();
-    
-        foreach ($athletes_name as $id) {
-            if ($id != 0) {
-                conn();    
-                $addMedals = ORM::for_table('country_medals')->create();
-                $addMedals->medal_type_id = $medals_id;
-                $addMedals->country_id = $country_id;
-                $addMedals->team = $team;
-                $addMedals->sport_type_id = $sport_types_id;
-                $addMedals->athletes_id = $id;
-                $addMedals->save();
+
+        if (!empty($athletes)) {
+            foreach ($athletesName as $id) {
+                if ($id != 0) {
+                    $addMedals = ORM::for_table('country_medals')->create();
+                    $addMedals->medal_type_id = $medalsId;
+                    $addMedals->country_id = $countryId;
+                    $addMedals->team = $team;
+                    $addMedals->sport_type_id = $sportTypesId;
+                    $addMedals->athletes_id = $id;
+                    $addMedals->save();
+                }
             }
-            
         }
+
+        header("Location: /medals/view");
+        die();
     }
 
-    function output(){
-        conn();
+    function view(){
+  
         $medals = ORM::for_table('medal_type')->order_by_asc('id')->find_array();
-        $sport_type = ORM::for_table('sport_type')->order_by_desc('sport_type')->find_array();
+        $sportType = ORM::for_table('sport_type')->order_by_desc('sport_type')->find_array();
         $country = ORM::for_table('country')->order_by_asc('country')->find_array();
         $athletes = ORM::for_table('athletes')->order_by_asc('name')->find_array();
 
-        $country_medals= ORM::for_table('country_medals')
+        $countryMedals= ORM::for_table('country_medals')
         ->select('country_medals.id')
         ->select('country.country')
         ->select('medal_type.medal_type')
@@ -58,14 +59,14 @@ class Medals{
         ->order_by_desc('country')
         ->find_array();
 
-        $smarty = smarty_conn();
-        $smarty->assign('country_medals',$country_medals);
-        $smarty->assign('medals',$medals);
-        $smarty->assign('sport_type', $sport_type);
-        $smarty->assign('country', $country);
-        $smarty->assign('athletes', $athletes);
+      
+        $this->smarty->assign('country_medals',$countryMedals);
+        $this->smarty->assign('medals',$medals);
+        $this->smarty->assign('sport_type', $sportType);
+        $this->smarty->assign('country', $country);
+        $this->smarty->assign('athletes', $athletes);
 
-        $smarty->display('add_medals.tpl');
+        $this->smarty->display('add_medals.tpl');
         return true;
     } 
 }

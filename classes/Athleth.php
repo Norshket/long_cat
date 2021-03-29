@@ -1,38 +1,32 @@
 <?php 
-require_once 'configs/config.php';
-require_once 'idiorm/idiorm.php';
-require_once 'lib/Smarty.class.php';
 
-
-class Athleth{
-
+class Athleth extends BaseService {
     function delete(){
-        conn();
-        $del_id = (int) $this->del;
-        $delSportType = ORM::for_table('athletes')->find_one($del_id);
+        $delId = (int)$_GET['del_id']; 
+        $delSportType = ORM::for_table('athletes')->find_one($delId);
         $delSportType->delete();
+        header("Location: /athleth/view");
+        die();
     }
 
-    function addAthleth($name, $sure_name,$patronymic ){
-        conn();  
-        $name = htmlentities($name);
-        $sure_name =  htmlentities($sure_name);
-        $patronymic = htmlentities($patronymic);
+    function add(){
+        $name = htmlentities($_POST['name']);
+        $sureName =  htmlentities($_POST['sure_name']);
+        $patronymic = htmlentities($_POST['patronymic']);
 
         $addAthletes = ORM::for_table('athletes')->create();
         $addAthletes->name = $name;
-        $addAthletes->sure_name = $sure_name;
+        $addAthletes->sure_name = $sureName;
         $addAthletes->patronymic = $patronymic;
         $addAthletes->save();
-
+        header("Location: /athleth/view");
+        die();
     }
-    function output(){
-
-        conn();                       
-        $athletes = ORM::for_table('athletes')->order_by_asc('name')->find_array();
-        $smarty = smarty_conn();        
-        $smarty->assign('athletes',$athletes);
-        $smarty->display('add_athleth.tpl');
+    function view(){       
+        $athletes = ORM::for_table('athletes')->order_by_asc('name')->find_array();   -          
+        $this->smarty->assign('athletes',$athletes);
+        $this->smarty->display('add_athleth.tpl');
+        return true;
     }
 }
 

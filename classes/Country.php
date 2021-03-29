@@ -1,40 +1,35 @@
 <?php
-require_once 'configs/config.php';
-require_once 'lib/Smarty.class.php';
-require_once 'idiorm/idiorm.php';
-
-
-class Country{   
+class Country extends BaseService { 
 
     function delete(){
-    conn();
-    $del_id = (int)$_GET['del_id'];   
-    $delSportType = ORM::for_table('country')->find_one($del_id);    
-    $delSportType->delete();
-    return true;
+        $delId = (int)$_GET['del_id'];   
+
+        $delSportType = ORM::for_table('country')->find_one($delId);    
+
+        $delSportType->delete();
+        header("Location: /country/view");
+        die();
+    }
+ 
+    function view(){  
+
+        $allCountry = ORM::for_table('country')->order_by_asc('country')->find_array();
+
+        $this->smarty->assign('all_country',$allCountry);
+        $this->smarty->display('add_country.tpl');
+        die();
     }
 
-    
-    function output(){
-    conn();  
-            
-    $all_country = ORM::for_table('country')->order_by_asc('country')->find_array();;
-    $smarty = smarty_conn();
-    $smarty->assign('all_country',$all_country);
-    $smarty->display('add_country.tpl');
-    return true;
-    }
-
-    function add($add)
+    function add()
     {       
-    conn();  
-    $country = htmlentities($add);
-    $addCountry = ORM::for_table('country')->create();
-    $addCountry->country = $country;
-    $addCountry->save();
-    return true;
-
+        $country = htmlentities($_POST['country']);
+        $addCountry = ORM::for_table('country')->create();
+        $addCountry->country = $country;
+        $addCountry->save();
+        header("Location: /country/view");
+        return true;
     }
 }
+
 
 ?>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.39, created on 2021-03-26 17:32:19
+/* Smarty version 3.1.39, created on 2021-03-29 13:33:42
   from 'C:\OSPanel\domains\tasks\template\add_athleth.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.39',
-  'unifunc' => 'content_605df073da99b3_83816106',
+  'unifunc' => 'content_6061ad067ff718_54128405',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5c1d0d1bad09db050cec71316ef01d8d2134df35' => 
     array (
       0 => 'C:\\OSPanel\\domains\\tasks\\template\\add_athleth.tpl',
-      1 => 1616768697,
+      1 => 1617004568,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_605df073da99b3_83816106 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6061ad067ff718_54128405 (Smarty_Internal_Template $_smarty_tpl) {
 ?>    <?php $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?> 
   
@@ -32,9 +32,9 @@ function content_605df073da99b3_83816106 (Smarty_Internal_Template $_smarty_tpl)
 
         <div class="row justify-content-between">
 
-            <form class="form col-md-4" method="POST">
+            <form class="form col-md-4" action="/athleth/add" method="POST">
 
-                <label class="form-label" for="name"> Введите имя: </label>
+                <label class="form-label"   for="name"> Введите имя: </label>
                 <input required class="form-control" type="text" name="name" id="name" value="">
 
                 <label class="form-label" for="sure_name"> Введите фамилию:</label> <input required class="form-control" type="text" name="sure_name" id="sure_name" value="">
@@ -59,7 +59,7 @@ $_smarty_tpl->tpl_vars['value']->do_else = false;
  <?php echo $_smarty_tpl->tpl_vars['value']->value['sure_name'];?>
  <?php echo $_smarty_tpl->tpl_vars['value']->value['patronymic'];?>
 </td>
-                            <td><a class="btn bg-danger" href="Athleth/delete?del_id=<?php echo $_smarty_tpl->tpl_vars['value']->value['id'];?>
+                            <td><a class="btn bg-danger" href="/athleth/delete?del_id=<?php echo $_smarty_tpl->tpl_vars['value']->value['id'];?>
 ">Удалить</a></td>
                         </tr>
                 <?php

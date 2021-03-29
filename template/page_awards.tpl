@@ -2,7 +2,7 @@
     {include file = "header.tpl"}
     <div class="container">
     {if isset($medalsNamesCountry) && $medalsNamesCountry}
-    <h2 class="h2">Страна{$country}</h2>
+    <h2 class="h2">Страна {$medalsNamesCountry.0.country }</h2>
         <table class="table" >
             <tr>
                 <th>Вид спорта</th>

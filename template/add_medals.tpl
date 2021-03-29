@@ -3,7 +3,7 @@
     <div class="container">
     <h2 class="h2">Присвоение медалей</h2>
         <div class="row justify-content-between ">
-            <form class="form col-lg-3" method="POST">
+            <form class="form col-lg-3" action="/medals/add" method="POST">
                 {if isset($medals) && $medals }
                     <label class="form-label" for="medals">Медали</label>
                     <select class="form-control" name="medals" id="medals">
@@ -37,7 +37,7 @@
 
                 {if isset($athletes) && athletes}
 
-                    <label class="form-label" for="athletes">Первый спортсмен</label>
+                    <label class="form-label"  for="athletes">Первый спортсмен</label>
                     <select class="form-control" name="athletes[1]" id="athletes">
                         <option value="">Выберите имя сопортсмена </option>
                         {foreach $athletes as $value}
@@ -93,7 +93,7 @@
                             <td>{$value.medal_type} </td>
                             <td>{$value.sport_type} </td>
                             <td>{$value.name} {$value.sure_name} {$value.patronymic}</td>
-                            <td><a  class="btn bg-danger" href="Medals/delete?del_id={$value.id}">Удалить</a> </td>
+                            <td><a  class="btn bg-danger" href="/medals/delete?del_id={$value.id}">Удалить</a> </td>
 
                         </tr>
                     {/foreach}
